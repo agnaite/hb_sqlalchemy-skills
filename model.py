@@ -1,13 +1,14 @@
 """Models and database functions for cars db."""
 
 from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
 
 # Here's where we create the idea of our database. We're getting this through
 # the Flask-SQLAlchemy library. On db, we can find the `session`
 # object, where we do most of our interactions (like committing, etc.)
 
 db = SQLAlchemy()
-
+app = Flask(__name__)
 
 ##############################################################################
 # Part 1: Compose ORM
@@ -72,9 +73,6 @@ if __name__ == "__main__":
     # you in a state of being able to work with the database directly.
 
     # So that we can use Flask-SQLAlchemy, we'll make a Flask app.
-    from flask import Flask
-
-    app = Flask(__name__)
 
     connect_to_db(app)
     print "Connected to DB."

@@ -1,3 +1,8 @@
+from model import db, connect_to_db, app, Human, Animal
+from flask_sqlalchemy import SQLAlchemy
+
+connect_to_db(app)
+
 # -----------------
 # PART TWO: QUERIES
 # -----------------
@@ -21,7 +26,7 @@ q5 = Animal.query.filter_by(birth_year=None).all()
 q6 = Animal.query.filter((Animal.animal_species=="fish") | (Animal.animal_species=="rabbit")).all()
 
 # Find all the humans whose email addresses do not contain 'gmail'
-from SQLAlchemy import not_
+from sqlalchemy import not_
 q7 = Human.query.filter(not_(Human.email.like('%gmail%'))).all()
 
 # ---------------------
@@ -42,20 +47,29 @@ q7 = Human.query.filter(not_(Human.email.like('%gmail%'))).all()
 #           Animal name (animal species)
 
 def print_customer_directory():
-    """"""
-    pass
+    """Print all the humans and their animals."""
+
+    humans = Human.query.all()
+
+    for human in humans:
+        print human.fname, human.lname
+        for animal in human.animals:
+            print '\t', animal.name, "("+animal.animal_species+")"
 
 # 2. Write a function, get_animals_by_name, which takes in a string representing an animal name
 #    (or part of an animal name) and *returns a list of animals* whose names
 #    contain that string.
 
 def get_animals_by_name(name):
-    """"""
-    pass
+    """Return animals that contain name."""
+
+    return Animal.query.filter(Animal.name.like('%'+name+'%')).all()
 
 # 3. Write a function, find_humans_by_animal_species, which takes in an animal
 #    species and *returns a list* of all of the humans who have animals of that species.
 
 def find_humans_by_animal_species(species):
-    """"""
-    pass
+    """Return all humans that own the species passed in."""
+
+    humans = Human.query.all()
+    return [human for human in humans if species in [animal.animal_species for animal in human.animals]]
