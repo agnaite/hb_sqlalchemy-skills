@@ -3,25 +3,26 @@
 # -----------------
 
 # Get the human with the id 2.
-q1 = None
+q1 = Human.query.get(2)
 
 # Get all of the animals for the human with the id 5 and the animal species 'dog'
-q2 = None
+q2 = Animal.query.filter_by(animal_species='dog', human_id=5).all()
 
 # Get all the animals that were born after 2015 (do not include animals without birth years).
-q3 = None
+q3 = Animal.query.filter(Animal.birth_year > 2015).all()
 
 # Find the customers with first names that start with 'J'
-q4 = None
+q4 = Human.query.filter(Human.fname.startswith('J')).all()
 
 # Find all the animals without birth years in the database.
-q5 = None
+q5 = Animal.query.filter_by(birth_year=None).all()
 
 # Find all animals that are either fish or rabbits
-q6 = None
+q6 = Animal.query.filter((Animal.animal_species=="fish") | (Animal.animal_species=="rabbit")).all()
 
 # Find all the humans whose email addresses do not contain 'gmail'
-q7 = None
+from SQLAlchemy import not_
+q7 = Human.query.filter(not_(Human.email.like('%gmail%'))).all()
 
 # ---------------------
 # PART THREE: FUNCTIONS
